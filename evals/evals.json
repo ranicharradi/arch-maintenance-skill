@@ -1,0 +1,29 @@
+{
+  "skill_name": "arch-maintenance",
+  "evals": [
+    {
+      "id": 0,
+      "name": "audit-is-it-safe-to-update",
+      "prompt": "can you check my arch box and tell me whether it's safe to do a full update right now? haven't updated in a couple weeks",
+      "expected_output": "Runs the read-only audit (checkupdates, paru -Qua, failed units, journal errors, orphans, pacnew, kernel-vs-modules, disk) directly without asking permission for each read; checks Arch news before giving a verdict; reports findings in the classified Critical/Should fix/Optional/No action format; proposes a full-upgrade flow (pacman -Syu or paru) tagged changes-system:yes and waits for approval; never runs a mutating command.",
+      "files": [],
+      "assertions": []
+    },
+    {
+      "id": 1,
+      "name": "aur-review-before-install",
+      "prompt": "I want to install the aur package 'spotify' — before I do, can you make sure the PKGBUILD isn't doing anything sketchy?",
+      "expected_output": "Treats the AUR as untrusted until reviewed; prints/reads the PKGBUILD (paru -Gp; optionally paru -Gc for the AUR page comments) which is a read-only action done directly; reviews for surprising network fetches, sudo/privilege use, destructive or obfuscated commands; never installs without explicit approval; never uses --skipreview; mentions preferring a repo equivalent if one exists; reminds that any actual install must follow/accompany a full upgrade, never pacman -Sy.",
+      "files": [],
+      "assertions": []
+    },
+    {
+      "id": 2,
+      "name": "cleanup-low-disk",
+      "prompt": "my root partition is getting full, can you clean up pacman to free some space?",
+      "expected_output": "Audits disk and cache sizes read-only first; proposes conservative paccache trims (paccache -r keeps last 3, -ruk0 for uninstalled) tagged changes-system:yes and gated on approval; does NOT default to pacman -Scc (warns it destroys rollback ability); reviews orphans (pacman -Qtdq) before any removal and gates -Rns on approval of the specific list; never touches user data, dotfiles, or snapshots.",
+      "files": [],
+      "assertions": []
+    }
+  ]
+}
