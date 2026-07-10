@@ -71,3 +71,7 @@ Two details assume the machine this skill was written on and are safe to edit in
 ## Evals
 
 `evals/evals.json` contains behavioral test prompts with expected outcomes (audit stays read-only, AUR review before install, conservative cleanup). Useful as regression checks if you modify the skill.
+
+## License
+
+[MIT](LICENSE)
